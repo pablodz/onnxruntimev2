@@ -267,7 +267,6 @@ type TensorInt64 struct {
 }
 
 type Tensors struct {
-	Order         int
 	TensorFloat32 *Tensor[float32]
 	TensorInt64   *Tensor[int64]
 }
