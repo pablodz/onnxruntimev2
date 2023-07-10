@@ -827,18 +827,15 @@ func NewSessionWithPath(path string, inputNames,
 	cInputNames := make([]*C.char, len(inputNames))
 	cOutputNames := make([]*C.char, len(outputNames))
 	for i, v := range inputNames {
-		fmt.Println("inputNames", i, v)
 		cInputNames[i] = C.CString(v)
 	}
 	for i, v := range outputNames {
-		fmt.Println("outputNames", i, v)
 		cOutputNames[i] = C.CString(v)
 	}
 	inputOrtTensors := make([]*C.OrtValue, len(inputs))
 	outputOrtTensors := make([]*C.OrtValue, len(outputs))
 	for i, v := range inputs {
 
-		fmt.Println("inputs", i, v)
 		switch {
 		case v.TensorFloat32 != nil:
 			inputOrtTensors[i] = v.TensorFloat32.ortValue
@@ -847,7 +844,6 @@ func NewSessionWithPath(path string, inputNames,
 		}
 	}
 	for i, v := range outputs {
-		fmt.Println("outputs", i, v)
 		switch {
 		case v.TensorFloat32 != nil:
 			outputOrtTensors[i] = v.TensorFloat32.ortValue
