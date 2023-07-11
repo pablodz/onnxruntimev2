@@ -812,6 +812,7 @@ func NewSessionWithPath(path string, inputNames,
 	}
 
 	var ortSession *C.OrtSession
+	ortSession = *C.OrtSession{}
 	modelPath := C.CString(path)
 	defer C.free(unsafe.Pointer(modelPath))
 	status := C.CreateSessionPath(modelPath, ortEnv, &ortSession)

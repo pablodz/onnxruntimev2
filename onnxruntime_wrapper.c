@@ -846,6 +846,12 @@ OrtStatus *CreateSessionPath(char *model_path,
   status = ort_api->CreateSessionOptions(&options);
   if (status)
     return status;
+
+  // Set IntraOpNumThreads and InterOpNumThreads
+  ort_api->SetIntraOpNumThreads(options, 1);
+  ort_api->SetInterOpNumThreads(options, 1);
+  ort_api->SetSessionGraphOptimizationLevel(options, ORT_ENABLE_ALL);
+  
 #ifdef _WIN32_SESSION
   const wchar_t *model_path2 = GetWC(model_path);
   status = ort_api->CreateSession(env, (ORTCHAR_T *)model_path2,
