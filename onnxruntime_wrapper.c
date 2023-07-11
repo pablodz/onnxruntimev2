@@ -869,9 +869,17 @@ OrtStatus *CreateSession(void *model_data, size_t model_data_length,
   status = ort_api->CreateSessionOptions(&options);
   if (status)
     return status;
-  status = ort_api->CreateSessionFromArray(env, model_data, model_data_length,
-                                           options, out);
-  // It's OK to release the session options now, right? The docs don't say.
+
+  // Set IntraOpNumThreads and InterOpNumThreads
+  ort_api->SetIntraOpNumThreads(options, 1);
+  ort_api->SetInterOpNumThreads(options, 1);
+  ort_api->SetSessionGraphOptimizationLevel(options, ORT_ENABLE_ALL);
+
+
+  // Create session with options
+  status = ort_api->CreateSessionFromArray(env, model_data, model_data_length, options, out);
+
+  // Release session options
   ort_api->ReleaseSessionOptions(options);
   return status;
 }
